@@ -12,6 +12,7 @@ public class LiveDocument {
     private String liveName;
     private String channelName;
     private LocalDateTime liveDate;
+    private String liveLink;
     private LocalDateTime registrationDate;
 
     public String getId() {
@@ -44,6 +45,14 @@ public class LiveDocument {
 
     public void setLiveDate(LocalDateTime liveDate) {
         this.liveDate = liveDate;
+    }
+
+    public String getLiveLink() {
+        return liveLink;
+    }
+
+    public void setLiveLink(String liveLink) {
+        this.liveLink = liveLink;
     }
 
     public LocalDateTime getRegistrationDate() {
