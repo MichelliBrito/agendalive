@@ -3,9 +3,11 @@ package com.spring.agendalive.service;
 import com.spring.agendalive.document.LiveDocument;
 import com.spring.agendalive.repository.LiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -14,8 +16,12 @@ public class LiveService {
     @Autowired
     LiveRepository liveRepository;
 
-    public List<LiveDocument> findAll(){
-        return liveRepository.findAll();
+    public Page<LiveDocument> findAll(Pageable pageable, String date){
+        if(date != null) {
+            return liveRepository.findByLiveDate(LocalDate.parse(date), pageable);
+        }else{
+            return liveRepository.findAll(pageable);
+        }
     }
 
     public Optional<LiveDocument> findById(String id){

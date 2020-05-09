@@ -2,7 +2,10 @@ package com.spring.agendalive.document;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Document
 public class LiveDocument {
@@ -11,7 +14,8 @@ public class LiveDocument {
     private String id;
     private String liveName;
     private String channelName;
-    private LocalDateTime liveDate;
+    private LocalDate liveDate;
+    private LocalTime liveTime;
     private String liveLink;
     private LocalDateTime registrationDate;
 
@@ -39,12 +43,20 @@ public class LiveDocument {
         this.channelName = channelName;
     }
 
-    public LocalDateTime getLiveDate() {
+    public LocalDate getLiveDate() {
         return liveDate;
     }
 
-    public void setLiveDate(LocalDateTime liveDate) {
+    public void setLiveDate(LocalDate liveDate) {
         this.liveDate = liveDate;
+    }
+
+    public LocalTime getLiveTime() {
+        return liveTime;
+    }
+
+    public void setLiveTime(LocalTime liveTime) {
+        this.liveTime = liveTime;
     }
 
     public String getLiveLink() {

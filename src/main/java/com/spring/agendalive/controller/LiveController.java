@@ -3,6 +3,10 @@ package com.spring.agendalive.controller;
 import com.spring.agendalive.document.LiveDocument;
 import com.spring.agendalive.service.LiveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +23,13 @@ public class LiveController {
     LiveService liveService;
 
     @GetMapping("/lives")
-    public ResponseEntity<List<LiveDocument>> getAllLives(){
-        List<LiveDocument> liveList = liveService.findAll();
-        if(liveList.isEmpty()) {
+    public ResponseEntity<Page<LiveDocument>> getAllLives(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                                          @RequestParam(required = false) String date){
+        Page<LiveDocument> livePage = liveService.findAll(pageable, date);
+        if(livePage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else {
-            return new ResponseEntity<List<LiveDocument>>(liveList, HttpStatus.OK);
+            return new ResponseEntity<Page<LiveDocument>>(livePage, HttpStatus.OK);
         }
     }
 
