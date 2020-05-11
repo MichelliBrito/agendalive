@@ -11,4 +11,5 @@ import java.time.LocalDate;
 public interface LiveRepository extends MongoRepository<LiveDocument, String> {
 
     Page<LiveDocument> findByLiveDate(LocalDate date, Pageable pageable);
+    Page<LiveDocument> findByLiveDateGreaterThan(LocalDate date, Pageable pageable);
 }

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class LiveController {
 
@@ -46,7 +46,6 @@ public class LiveController {
     @PostMapping("/lives")
     public ResponseEntity<LiveDocument> saveLive(@RequestBody @Valid LiveDocument live) {
         live.setRegistrationDate(LocalDateTime.now());
-        //live.setLiveDate(LocalDateTime.now());
         return new ResponseEntity<LiveDocument>(liveService.save(live), HttpStatus.CREATED);
     }
 

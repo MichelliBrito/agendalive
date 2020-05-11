@@ -20,7 +20,8 @@ public class LiveService {
         if(date != null) {
             return liveRepository.findByLiveDate(LocalDate.parse(date), pageable);
         }else{
-            return liveRepository.findAll(pageable);
+            //return liveRepository.findAll(pageable);
+            return liveRepository.findByLiveDateGreaterThan(LocalDate.now().minusDays(1), pageable);
         }
     }
 
