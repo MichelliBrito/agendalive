@@ -4,12 +4,11 @@ import com.spring.agendalive.document.LiveDocument;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public interface LiveRepository extends MongoRepository<LiveDocument, String> {
 
-    Page<LiveDocument> findByLiveDate(LocalDate date, Pageable pageable);
-    Page<LiveDocument> findByLiveDateGreaterThan(LocalDate date, Pageable pageable);
+    Page<LiveDocument> findByLiveDateAfter(LocalDateTime date, Pageable pageable);
+    Page<LiveDocument> findByLiveDateBefore(LocalDateTime date, Pageable pageable);
 }
