@@ -18,9 +18,9 @@ public class LiveService {
 
     public Page<LiveDocument> findAll(Pageable pageable, String flag){
         if(flag != null && flag.equals("next")){
-            return liveRepository.findByLiveDateAfter(LocalDateTime.now(), pageable);
+            return liveRepository.findByLiveDateAfterOrderByLiveDateAsc(LocalDateTime.now(), pageable);
         }else if(flag != null && flag.equals("previous")){
-            return liveRepository.findByLiveDateBefore(LocalDateTime.now(), pageable);
+            return liveRepository.findByLiveDateBeforeOrderByLiveDateDesc(LocalDateTime.now(), pageable);
         }else{
             return liveRepository.findAll(pageable);
         }
