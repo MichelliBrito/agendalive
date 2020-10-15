@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class LiveController {
     LiveService liveService;
 
     @GetMapping("/lives")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Page<LiveDocument>> getAllLives(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                                           @RequestParam(required = false) String flag){
         Page<LiveDocument> livePage = liveService.findAll(pageable, flag);
@@ -34,6 +36,7 @@ public class LiveController {
     }
 
     @GetMapping("/lives/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<LiveDocument> getOneLive(@PathVariable(value="id") String id){
         Optional<LiveDocument> liveO = liveService.findById(id);
         if(!liveO.isPresent()) {
@@ -44,12 +47,14 @@ public class LiveController {
     }
 
     @PostMapping("/lives")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<LiveDocument> saveLive(@RequestBody @Valid LiveDocument live) {
         live.setRegistrationDate(LocalDateTime.now());
         return new ResponseEntity<LiveDocument>(liveService.save(live), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/lives/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> deleteLive(@PathVariable(value="id") String id) {
         Optional<LiveDocument> liveO = liveService.findById(id);
         if(!liveO.isPresent()) {
@@ -61,6 +66,7 @@ public class LiveController {
     }
 
     @PutMapping("/lives/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<LiveDocument> updateLive(@PathVariable(value="id") String id,
                                                       @RequestBody @Valid LiveDocument liveDocument) {
         Optional<LiveDocument> liveO = liveService.findById(id);
